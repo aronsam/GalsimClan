@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="refresh" content="1">
+  
+  <title>virgilio C. Galsim — Family Tree</title>
+  <style>
+    :root{ 
+      --bg:#f4f7fb; 
+      --card:#fff; 
+      --accent:#2b6cb0; 
+      --text:#1f2d3d; 
+      --hover:#dbe9f7; 
+      --nav-bg:#2b6cb0;
+      --nav-text:#fff;
+    }
+
+    *{box-sizing:border-box; margin:0; padding:0;}
+    body{
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; 
+      background:var(--bg); 
+      color:var(--text); 
+    }
+
+    /* Navigation Bar */
+    nav{
+      background:var(--nav-bg);
+      color:var(--nav-text);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 20px;
+      flex-wrap:wrap;
+    }
+
+    nav .logo{
+      font-weight:bold;
+      font-size:18px;
+      cursor:pointer;
+    }
+
+    nav .nav-left, nav .nav-right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    nav a{
+      color:var(--nav-text);
+      text-decoration:none;
+      padding:6px 12px;
+      border-radius:6px;
+      transition: background 0.2s;
+    }
+
+    nav a:hover{
+      background:rgba(255,255,255,0.2);
+    }
+
+    nav input[type="text"]{
+      padding:6px 10px;
+      border-radius:6px;
+      border:none;
+      outline:none;
+    }
+
+    nav button{
+      padding:6px 10px;
+      border:none;
+      border-radius:6px;
+      background:#fff;
+      color:#2b6cb0;
+      cursor:pointer;
+      font-weight:bold;
+      transition: background 0.2s;
+    }
+
+    nav button:hover{
+      background:#f1f1f1;
+    }
+
+    nav .dropdown{
+      position:relative;
+    }
+
+    nav .dropdown-content{
+      display:none;
+      position:absolute;
+      right:0;
+      background:#fff;
+      color:#000;
+      min-width:120px;
+      border-radius:6px;
+      box-shadow:0 4px 8px rgba(0,0,0,0.2);
+      overflow:hidden;
+      z-index:10;
+    }
+
+    nav .dropdown-content a{
+      display:block;
+      padding:10px;
+      color:#000;
+      text-decoration:none;
+    }
+
+    nav .dropdown-content a:hover{
+      background:#f1f1f1;
+    }
+
+    nav .dropdown:hover .dropdown-content{
+      display:block;
+    }
+
+    /* Tree container */
+    .tree-wrap{ max-width:1000px; width:100%; margin:20px auto; padding:0 10px; }
+
+    header{ text-align:center; margin-bottom:30px; }
+    header h1{ font-size:22px; margin-bottom:8px; color:var(--accent); }
+    header p{ color:#445; font-size:14px; }
+
+    .tree{ 
+      background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9)); 
+      padding:20px; 
+      border-radius:12px; 
+      box-shadow:0 6px 20px rgba(20,30,50,0.06); 
+    }
+
+    .generation{
+      display:flex; 
+      justify-content:center; 
+      gap:12px; 
+      flex-wrap:wrap;
+      margin-bottom:20px;
+    }
+
+    .person{ 
+      background:var(--card); 
+      border:2px solid #e6eef9; 
+      border-radius:10px; 
+      width:140px; 
+      min-height:80px; 
+      display:flex; 
+      flex-direction:column; 
+      justify-content:center; 
+      align-items:center; 
+      text-align:center; 
+      position:relative; 
+      padding:12px; 
+      transition: background 0.3s;
+    }
+
+    .person .name{ 
+      font-weight:600; 
+      font-size:14px; 
+      cursor:pointer; 
+      transition: transform 0.2s, color 0.2s; 
+    }
+
+    .person .name:hover{ 
+      color:var(--accent); 
+      transform:scale(1.05); 
+    }
+
+    .person:hover{ 
+      background:var(--hover); 
+    }
+
+    .person .sub{ 
+      font-size:11px; 
+      color:#6b7a8a; 
+      margin-top:6px; 
+      word-break: break-word;
+    }
+
+    /* Responsive tweaks for small screens */
+    @media (max-width:640px){
+      body{ padding:10px; }
+      .person{ width:100px; min-height:70px; padding:8px; }
+      .person .name{ font-size:12px; }
+      .person .sub{ font-size:10px; }
+      header h1{ font-size:18px; }
+      header p{ font-size:12px; }
+      .generation{ gap:8px; }
+      nav{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      nav .nav-left, nav .nav-right{
+        width:100%;
+        justify-content:flex-start;
+        gap:8px;
+        margin:5px 0;
+      }
+      nav input[type="text"]{
+        width:100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo" onclick="window.location.href='index.html'">Family Tree</div>
+    <div class="nav-left">
+      <a href="home.html">Home</a>
+      <div style="display:flex; gap:6px; align-items:center;">
+        <input type="text" placeholder="Search family member..." id="searchInput">
+        <button id="searchBtn">Search</button>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="dropdown">
+        <a href="#">User ▼</a>
+        <div class="dropdown-content">
+          <a href="#">Profile</a>
+          <a href="#">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Tree content -->
+  <div class="tree-wrap">
+    <header>
+      <h1>Virgilio C. Galsim &amp; Matilde P. Benabese</h1>
+      <p>Family tree — parents and their children</p>
+    </header>
+
+    <div class="tree" id="familyTree">
+      <!-- Parents row -->
+      <div class="generation">
+        <div class="person" title="Virgilio C. Galsim">
+          <div class="name" onclick="window.location.href='virgilio.html'">Virgilio C. Galsim</div>
+          <div class="sub">Father</div>
+        </div>
+
+        <div class="person" title="Matilde Galsim">
+          <div class="name" onclick="window.location.href='matilde.html'">Matilde Galsim</div>
+          <div class="sub">Mother</div>
+        </div>
+      </div>
+
+      <!-- Children row -->
+      <div class="generation children">
+        <div class="person" title="Allan B. Galsim">
+          <div class="name" onclick="window.location.href='allan.html'">Allan B. Galsim</div>
+          <div class="sub">Child / Married to<br> Esperanza Eslao</div>
+        </div>
+
+        <div class="person" title="Elena B. Galsim">
+          <div class="name" onclick="window.location.href='elena.html'">Elena B. Galsim</div>
+          <div class="sub">Child / Married to<br> Denis Castor</div>
+        </div>
+
+        <div class="person" title="Elvira  B. Galsim">
+          <div class="name" onclick="window.location.href='elvira.html'">Elvira  B. Galsim</div>
+          <div class="sub">Child / Married<br>Allan Hindle</div>
+        </div>
+
+        <div class="person" title="Alvin B. Galsim">
+          <div class="name" onclick="window.location.href='alvin.html'">Alvin B. Galsim</div>
+          <div class="sub">Child / Married<br>Rona V. Castillo</div>
+        </div>
+
+        <div class="person" title="irene C. Galsim">
+          <div class="name" onclick="window.location.href='irene.html'">irene C. Galsim</div>
+          <div class="sub">Child - Married<br> Eduardo Santos</div>
+        </div>
+		
+		<div class="person" title="Virgilio Jr. C. Galsim">
+          <div class="name" onclick="window.location.href='virgilio.html'">Virgilio Jr. C. Galsim</div>
+          <div class="sub">Child - Married<br> Jessa Mae </div>
+        </div>
+		
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const people = document.querySelectorAll('.person');
+
+    function performSearch() {
+      const query = searchInput.value.toLowerCase();
+      people.forEach(person => {
+        const name = person.querySelector('.name').textContent.toLowerCase();
+        if(name.includes(query)){
+          person.style.display = 'flex';
+        } else {
+          person.style.display = 'none';
+        }
+      });
+    }
+
+    // Trigger search on input enter key
+    searchInput.addEventListener('keypress', function(e){
+      if(e.key === 'Enter'){
+        performSearch();
+      }
+    });
+
+    // Trigger search on button click
+    searchBtn.addEventListener('click', performSearch);
+  </script>
+</body>
+</html>
