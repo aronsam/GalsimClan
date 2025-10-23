@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Benedicto C. Galsim — Family Tree</title>
   <style>
     :root{ 
@@ -21,6 +21,7 @@
       font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; 
       background:var(--bg); 
       color:var(--text); 
+	  overflow-x: hidden;
     }
 
     /* Navigation Bar */
@@ -113,7 +114,9 @@
     }
 
     /* Tree container */
-    .tree-wrap {
+    
+
+	.tree-wrap {
       max-width: 1000px;
       width: 100%;
       margin: 20px auto;
@@ -229,32 +232,38 @@
     .person .sub { font-size:11px; color:#6b7a8a; margin-top:6px; word-break: break-word; }
 
    
-	
-    @media (max-width:640px){
-      body{ padding:10px; }
-      .person{ width:100px; min-height:70px; padding:8px; }
-      .person .name{ font-size:12px; }
-      .person .sub{ font-size:10px; }
-      header h1{ font-size:18px; }
-      header p{ font-size:12px; }
-      .generation{ gap:8px; }
-      nav{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-      nav .nav-left, nav .nav-right{
-        width:100%;
-        justify-content:flex-start;
-        gap:8px;
-        margin:5px 0;
-      }
-      nav input[type="text"]{
-        width:100%;
-      }
-	
-	  
-	  
-    }
+	@media (max-width: 640px) {
+  .tree-wrap {
+    max-width: 100%;
+    padding: 0 5px;
+  }
+
+  .generation.husband,
+  .generation.children,
+  .children2,
+  .children3 {
+    margin-left: 0 !important;
+    justify-content: center;
+  }
+
+  .generation.lola-pair {
+    gap: 50px !important;
+  }
+
+  .person,
+  .person1 {
+    width: 100px;
+    min-height: 70px;
+    font-size: 12px;
+  }
+
+  svg.connector-lines {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+    
   </style>
 </head>
 <body>
